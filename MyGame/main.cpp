@@ -20,8 +20,8 @@ int main(){
 
     // create characters
     Character player1, player2;
-    player1.init("Player 1", "(._.)", 100);
-    player2.init("Player 2", "(._.)", 100);
+    player1.init("Player 1", "(._.)1", 100);
+    player2.init("Player 2", "(._.)2", 100);
 
     //create player input variable
     string playerInput;

@@ -54,6 +54,12 @@ class Character{
         bool isAlive() const {
             return health > 0;
         }
+        
+        //Method to heal the character if he chooses to do it
+        void heal(){
+            cout << "\n" << name << " decided to heal itself and recieve +10 health\n"; 
+            health += 10;
+        }
 
 };
 
@@ -68,16 +74,20 @@ void update(Character &character1, Character &character2){
 
 // Function to make a combat turn
 void combatTurn(Character &attacker, Character &target){
-    cout << "\n" << attacker.name << " Choose an attack:\n";
+    cout << "\n" << attacker.name << " Choose an action:\n" << "attacks:\n";
     for(int i = 0; i < 4; i++){
         cout << i+1 << ". " << attacker.attacks[i].name << " (Damage: " << attacker.attacks[i].damage << ", Type: " << attacker.attacks[i].type << ")\n";
     }
-    int attackChoice;
-    cin >> attackChoice;
+    cout << "\n" << "5. use heal power\n";
+    int actionChoice;
+    cin >> actionChoice;
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
-    if(attackChoice >= 1 && attackChoice <= 4){
+    if(actionChoice >= 1 && actionChoice <= 4){
         this_thread::sleep_for(chrono::seconds(1)); // Pause for a moment before attacks
-        attacker.attacks[attackChoice - 1].attackTarget(target);
+        attacker.attacks[actionChoice - 1].attackTarget(target);
+    }
+    else if(actionChoice == 5){
+        attacker.heal();
     }
 
     update(attacker, target);
