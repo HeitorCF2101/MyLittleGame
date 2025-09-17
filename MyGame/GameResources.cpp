@@ -56,3 +56,32 @@ class Character{
         }
 
 };
+
+// Function to update and render all characters in the scene
+void update(Character &character1, Character &character2){
+    system("clear"); // Use "cls" for windows and "clear" for Linux/MacOS
+    cout << "The Players Battle\n";
+    character1.renderCharacter();
+    cout << "\n";
+    character2.renderCharacter();
+}
+
+// Function to make a combat turn
+void combatTurn(Character &attacker, Character &target){
+    cout << "\n" << attacker.name << " Choose an attack:\n";
+    for(int i = 0; i < 4; i++){
+        cout << i+1 << ". " << attacker.attacks[i].name << " (Damage: " << attacker.attacks[i].damage << ", Type: " << attacker.attacks[i].type << ")\n";
+    }
+    int attackChoice;
+    cin >> attackChoice;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
+    if(attackChoice >= 1 && attackChoice <= 4){
+        this_thread::sleep_for(chrono::seconds(1)); // Pause for a moment before attacks
+        attacker.attacks[attackChoice - 1].attackTarget(target);
+    }
+
+    update(attacker, target);
+
+    if(target.isAlive()) combatTurn(target, attacker);
+
+}
